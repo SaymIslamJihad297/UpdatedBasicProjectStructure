@@ -2,10 +2,16 @@ const fs = require('node:fs');
 const cloudinary = require('../middleware/cloudinary.config');
 const path = require('path');
 const listingModel = require('../models/listing.model');
+const ExpressError = require('../utils/ExpressError');
+const { addListingSchemaValidator } = require('../validations/schemaValidations');
 
 module.exports.addListings = async(req, res)=>{
 
-    const {title, description, location} = req.body;
+    const {error, value} = addListingSchemaValidator.validate(req.body);
+
+    if(error) return res.status(400).json({ error: error.details[0].message });
+
+    const {title, description, location} = value;
 
     const folderName = 'allDocuments';
 
