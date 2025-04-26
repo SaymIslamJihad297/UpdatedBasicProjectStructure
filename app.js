@@ -24,6 +24,7 @@ main().then(()=>{
 // routes
 const authRoutes = require('./routes/auth.routes');
 const userRoutes = require('./routes/user.routes');
+const listingRoutes = require('./routes/listing.routes');
 
 // models
 const userModel = require('./models/user.models');
@@ -48,6 +49,7 @@ app.use(passport.initialize());
 
 app.use('/auth',authRoutes);
 app.use('/user', userRoutes);
+app.use('/listing', listingRoutes);
 
 async function main() {
     mongoose.connect('mongodb://127.0.0.1:27017/AffiliateAPP');
