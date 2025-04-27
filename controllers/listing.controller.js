@@ -11,7 +11,7 @@ module.exports.addListings = async(req, res)=>{
 
     if(error) return res.status(400).json({ error: error.details[0].message });
 
-    const {title, description, location} = value;
+    const {title, description, location, url, categorie} = value;
 
     const folderName = 'allDocuments';
 
@@ -39,11 +39,14 @@ module.exports.addListings = async(req, res)=>{
         title,
         description,
         location,
+        url,
+        description,
+        categorie,
         images: uploadResults,
     })
 
     res.json({
-        message: "LIsting Posted successfully",
+        message: "Listing Posted successfully",
         data,
     })
 }
@@ -67,3 +70,14 @@ module.exports.getAllListings = async (req, res) => {
         hasMore: skip + limit < total
       });
   };
+
+
+module.exports.getListingCategories = async(req, res)=>{
+    const categorie = req.params.cat;
+    const skip = parseInt(req.query.skip);
+    const limit = parseInt(req.query.limit);
+
+    const data = await listingModel.find({categorie}).sort({createdAt: -1}).skip(skip).limit(limit);
+
+    res.send(data);
+}

@@ -17,5 +17,7 @@ module.exports.addListingSchemaValidator = Joi.object({
     title: Joi.string().required(),
     description: Joi.string().required(),
     location: Joi.string().required(),
+    url: Joi.string().required(),
+    categorie: Joi.string().required(),
 })
 
